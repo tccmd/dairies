@@ -14,18 +14,33 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 <script src="../js/validation.js"></script>
+<script src="../js/terms.js"></script>
 </head>
 <script>
-	function goPopup() {
-		var pop = window.open("/member/jusoPopup.do", "pop",
-				"width=570,height=420, scrollbars=yes, resizable=yes");
-	}
+	// opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
+	//document.domain = "abc.go.kr";
 
-	function jusoCallBack(roadAddrPart1, roadAddrPart2, zipNo) {
-		String roadAddrPart1 = request.getParameter("roadAddrPart1");
-		String roadAddrPart2 = request.getParameter("roadAddrPart2");
-		String zipNo = request.getParameter("zipNo");
+	function goPopup(){
+		// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+		var pop = window.open("/member/jusoPopup.do","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+		
+		// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+		//var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
 	}
+	/** API 서비스 제공항목 확대 (2017.02) **/
+	function jusoCallBack(roadAddrPart1, addrDetail, zipNo){
+    // 팝업 페이지에서 전달된 데이터를 받아 화면에 표시하거나 로직 처리
+    console.log("도로명 주소:", roadAddrPart1);
+    console.log("상세 주소:", addrDetail);
+    console.log("우편번호:", zipNo);
+
+    // 화면에 데이터를 표시하거나 form 필드에 값 할당
+    document.getElementById("roadAddrPart1").value = roadAddrPart1;
+    document.getElementById("roadAddrPart2").value = addrDetail;
+    document.getElementById("zipNo").value = zipNo;
+
+    // alert("주소가 입력되었습니다!");
+}
 
 	function idcheck() {
 		var pop = window.open("/member/idsearch.do", "pop",
@@ -54,6 +69,16 @@
 		}
 		member.submit();
 	}
+
+	function modalTexting(index) {
+    if (index === 1) {
+		document.querySelector('.modal-title').textContent = "서비스 이용약관(필수)"
+		document.querySelector('.modal-body').textContent = terms;
+	} else {
+		document.querySelector('.modal-title').textContent = "개인정보 수집/이용(필수)"
+		document.querySelector('.modal-body').textContent = personalInformation;
+	}
+}
 </script>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
@@ -90,7 +115,7 @@
 
 							<div class="form-group">
 								<!-- <label for="Password Check"> Password Check </label> -->
-								<input type="password" class="form-control" id="pw2"
+								<input type="password" class="form-control" id="pw2" name="pw2"
 									placeholder="* 비밀번호 확인" />
 							</div>
 
@@ -133,14 +158,14 @@
 
 							<div class="form-group">
 								<label for="Adderss"> Address </label> <br> <input
-									type="text" class="form-control-inline" name="zipNo" size="5"
+									type="text" class="form-control-inline" id="zipNo" name="zipNo" size="5"
 									readonly onclick="member.zipbtn.focus()" placeholder="우편번호" />
 								<input type="button" class="btn btn-outline-primary"
 									name="zipbtn" value="우편번호" onclick="goPopup()"> <input
-									type="text" class="form-control" name="roadAddrPart1" size="40"
+									type="text" class="form-control" id="roadAddrPart1" name="roadAddrPart1" size="40"
 									readonly onclick="member.zipbtn.focus()" placeholder="기본주소"
 									style="margin-bottom: 0px;"> <input type="text"
-									class="form-control" name="addrDetail" size="40" readonly
+									class="form-control" id="roadAddrPart2" name="roadAddrPart2" size="40" readonly
 									onclick="member.zipbtn.focus()" placeholder="나머지 주소"> <span
 									style="font-size: 10pt; color: #636c72;">우편번호 검색 후 나머지
 									주소를 입력해 주세요.</span>
@@ -163,16 +188,16 @@
 									</div>
 									<div class="col-md-6" align="right">
 
-										<a id="modal-718293" href="#modal-container-718293"
-											role="button" class="btn" data-toggle="modal">Launch demo
-											modal</a>
-
 										<p>
-											<button class="btn btn-outline-primary"
-												onclick="window.open('/member/terms','Dairies','width=430,height=500,location=no,status=no,scrollbars=yes');">전문보기</button>
+											<a id="modal-718293" href="#modal-container-718293"
+											role="button" class="btn btn-outline-primary" data-toggle="modal" onclick="modalTexting(1)">전문보기</a>
+											<!-- <button class="btn btn-outline-primary"
+												onclick="window.open(openPopup('/member/terms'))">전문보기</button> -->
 										<p>
-											<button class="btn btn-outline-primary"
-												onclick="window.open('/member/personal_information','Dairies','width=430,height=500,scrollbars=yes');">전문보기</button>
+											<a id="modal-718293" href="#modal-container-718293"
+											role="button" class="btn btn-outline-primary" data-toggle="modal" onclick="modalTexting(2)">전문보기</a>
+											<!-- <button class="btn btn-outline-primary"
+												onclick="window.open(openPopup('/member/personal_information'))">전문보기</button> -->
 									</div>
 								</div>
 							</div>
@@ -204,16 +229,18 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="myModalLabel">Modal title</h5>
+					<h5 class="modal-title" id="myModalLabel">이용약관</h5>
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">...</div>
+				<div class="modal-body">
+
+				</div>
 				<div class="modal-footer">
 
-					<button type="button" class="btn btn-primary">Save changes
-					</button>
+					<!-- <button type="button" class="btn btn-primary">Save changes
+					</button> -->
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Close</button>
 				</div>

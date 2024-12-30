@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Dairies.member.dto.MemberDto;
 import Dairies.member.service.MemberService;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class MemberController {
@@ -79,6 +81,12 @@ public class MemberController {
 	public String openLoginOk() throws Exception {
 		return "member/login_ok";
 	}
+
+	// @RequestMapping("/member/registOk")
+	// public String openRegistOk() throws Exception {
+	// 	return "member/regist_ok";
+	// }
+	
 	
 //	@RequestMapping("/member/loginOk.do")
 //	public ModelAndView loginOk(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) throws Exception{

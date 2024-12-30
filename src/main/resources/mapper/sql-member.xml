@@ -10,8 +10,8 @@
 				tel,
 				email,
 				email2,
-				zipNo.
-				roadAddrPart1.
+				zipNo,
+				roadAddrPart1,
 				roadAddrPart2,
 				DATE_FORMAT(created_datetime, '%Y.%m.%d %H:%i:%s') AS created_datetime
 			FROM
@@ -30,8 +30,8 @@
 				pw,
 				email,
 				email2,
-				zipNo.
-				roadAddrPart1.
+				zipNo,
+				roadAddrPart1,
 				roadAddrPart2,
 				created_datetime, 
 				creator_id

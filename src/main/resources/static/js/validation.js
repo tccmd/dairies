@@ -3,8 +3,8 @@ function validation() {
     // 유효성 검사 변수
     var idJ = /^[a-zA-Z0-9]{4,12}$/;
     //최소 10 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
-    //var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,20}$/;
-    var pwJ = /^[a-zA-Z0-9]{4,12}$/;
+    var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,20}$/;
+    // var pwJ = /^[a-zA-Z0-9]{4,12}$/;
     var emailJ = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])$/i;
 	// 네임 변수 처리
     var id = document.member.id.value;
@@ -46,7 +46,7 @@ function validation() {
     }
   	
     var check = document.getElementsByName("checkyes");
-    for(var i=0; i < 3; i++) {
+    for(var i=0; i < check.length; i++) {
         if(!check[i].checked) {
 			alert("약관에 동의해주세요.");
         	return false;       

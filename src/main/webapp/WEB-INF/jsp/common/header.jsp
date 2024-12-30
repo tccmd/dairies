@@ -12,7 +12,8 @@
 			<% request.setCharacterEncoding("UTF-8"); %>
 				<% String language=request.getParameter("language"); if (language !=null) { session.setAttribute("language",
 					language); } else if (session.getAttribute("language")==null) { session.setAttribute("language", "ko" ); } %>
-					<fmt:setLocale value="${param.language}" />
+
+					<fmt:setLocale value="${sessionScope.language}" />
 					<fmt:bundle basename="bundle.message">
 
 						<div class="row fixed-top" style="background-color: white;">
@@ -36,7 +37,7 @@
 											</li>
 											<li class="nav-item dropdown ml-md-auto">
 												<% if (id==null) { %> <span></span>
-													<% } else if (id.equals("admin")) { %>
+													<% } else if (id.equals("test")) { %>
 
 											<li class="nav-item"><a class="nav-link" href="/administrator.do">관리자 페이지</a></li>
 											<% } %>

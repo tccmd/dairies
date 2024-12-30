@@ -16,7 +16,7 @@
 		/* String name = request.getParameter("name");
 		String zipcode = request.getParameter("zipNo");
 		String addr = request.getParameter("roadAddrPart1");
-		String addrdetail = request.getParameter("addrDetail");
+		String addrdetail = request.getParameter("roadAddrPart2");
 		String tel = request.getParameter("tel1")+"-"+request.getParameter("tel2")+"-"+request.getParameter("tel3");
 		String gender = request.getParameter("gender");
 		String[] hobby = request.getParameterValues("hobby");
@@ -34,7 +34,8 @@
 		
 		try {
 			String sql = "insert into member(id, pw)";
-			sql = sql+ " values(?,?)"; //11개 //띄어쓰기 주의
+			sql = sql+ " values(?,?)"; 
+			<!-- //11개 //띄어쓰기 주의 -->
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,id);
 			pstmt.setString(2,pw);

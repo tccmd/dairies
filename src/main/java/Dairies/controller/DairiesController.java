@@ -36,13 +36,13 @@ public class DairiesController {
 		return "information/location";
 	}
 	
-	@RequestMapping("/member/terms")
-	public String openTerms() throws Exception {
-		return "member/terms";
-	}
+	// @RequestMapping("/member/terms")
+	// public String openTerms() throws Exception {
+	// 	return "member/terms";
+	// }
 	
-	@RequestMapping("/member/personal_information")
-	public String openPersonaInformation() throws Exception {
-		return "member/personal_information";
-	}
+	// @RequestMapping("/member/personal_information")
+	// public String openPersonaInformation() throws Exception {
+	// 	return "member/personal_information";
+	// }
 }
