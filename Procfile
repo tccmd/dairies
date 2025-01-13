@@ -1,0 +1,1 @@
+web: java -jar build/libs/Dairies-0.0.1-SNAPSHOT.jar
